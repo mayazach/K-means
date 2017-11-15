@@ -20,6 +20,7 @@ int main(int argc, char** argv){
 	ifstream config; //query dataset
 	ofstream output; //output file
 	bool complete = false,found = false;
+	int clusters;
 	int k = 2, l = 3,i,j,count,dimension=2,hash_value,position;
 	int n=0; //number of curves in dataset
 	char func;
@@ -191,30 +192,12 @@ int main(int argc, char** argv){
 	tablesize = n/8; //Number of buckets in each hash table
 	
 	/**
-		In this section, the program reads the curves from the query file saves them
+		Reading config file
 	**/
-	/*
-	query >> c.id >> r;
-	while(!query.eof()){
-		query >> c.id >> c.m;
-		c.points = new double*[c.m];
-		for(i=0;i<c.m;i++)
-			c.points[i] = new double[c.dimension];
-		for(i=0;i<c.m;i++){
-			getline(query,in,')');
-			replace(in.begin(),in.end(),',',' ');
-			replace(in.begin(),in.end(),'(',' ');
-			ss.str("");
-			ss << in;
-			for(j=0;j<dimension;j++){
-				ss >> coord;
-				c.points[i][j] = coord;
-			}
-			ss.clear();
-		}
-		queryList.push(c);
-	}
-	*/
+	config >> c.id >> clusters;
+	config >> c.id >> k;
+	config >> c.id >> l;
+	
 	/** Closing files **/
 	input.close();
 	output.close();
