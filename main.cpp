@@ -218,5 +218,5 @@ int main(int argc, char** argv){
 	/** Closing files **/
 	input.close();
 	output.close();
-	query.close();
+	config.close();
 }
