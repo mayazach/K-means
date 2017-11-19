@@ -37,6 +37,7 @@ int main(int argc, char** argv){
 	int start,end,tablesize;
 	Curve c;
 	hashTable** lTables;
+	Curve* curveArray;
 
 	/**
 		In this section, command line input is checked and argument values are assigned
@@ -150,6 +151,7 @@ int main(int argc, char** argv){
 	else if(c.id == "4")
 		dimension = 4;
 	else{
+		c.dimension = dimension;
 		input >> c.m;
 		c.points = new double*[c.m];
 		for(i=0;i<c.m;i++)
@@ -168,7 +170,7 @@ int main(int argc, char** argv){
 		}
 		mylist.push(c);
 	}
-	c.dimension = dimension;
+	//c.dimension = dimension;
 	while(!input.eof()){
 		input >> c.id >> c.m;
 		c.points = new double*[c.m];
@@ -197,6 +199,16 @@ int main(int argc, char** argv){
 	config >> c.id >> clusters;
 	config >> c.id >> k;
 	config >> c.id >> l;
+	
+	curveArray = new Curve[n];
+	i=0;
+	while(!mylist.isEmpty())
+		curveArray[i++] = mylist.remove();
+	
+	for(i=0;i<n;i++)
+		curvePrint(curveArray[i]);
+	
+	delete [] curveArray;
 	
 	/** Closing files **/
 	input.close();
