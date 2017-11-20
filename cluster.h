@@ -14,6 +14,8 @@ public:
 	void setId(int id);
 	Curve getCenter();
 	void setCenter(Curve center);
+	void addPoint(Curve point);
+	void print();
 };
 
 

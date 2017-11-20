@@ -12,6 +12,7 @@
 #include "randomnum.h"
 #include "hash.h"
 #include "gridcurves.h"
+#include "kfunctions.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ int main(int argc, char** argv){
 	Curve c;
 	hashTable** lTables;
 	Curve* curveArray;
+	Cluster* clusterArray;
 
 	/**
 		In this section, command line input is checked and argument values are assigned
@@ -205,8 +207,18 @@ int main(int argc, char** argv){
 	while(!mylist.isEmpty())
 		curveArray[i++] = mylist.remove();
 	
-	for(i=0;i<n;i++)
-		curvePrint(curveArray[i]);
+	clusterArray = new Cluster[clusters];
+	for(i=0;i<clusters;i++)
+		clusterArray[i].setId(i);
+	
+	randomK(curveArray,n,clusterArray,clusters);
+	
+	lloydAssignment(curveArray,n,clusterArray,clusters,func);
+	
+	for(i=0;i<clusters;i++)
+		clusterArray[i].print();
+	
+	delete [] clusterArray;
 	
 	delete [] curveArray;
 	

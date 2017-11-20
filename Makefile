@@ -1,6 +1,6 @@
-OBJS	= main.o curveList.o distance.o randomnum.o hash.o gridcurves.o cluster.o
-SOURCE	= main.cpp curveList.cpp distance.cpp randomnum.cpp hash.cpp gridcurves.cpp cluster.cpp
-HEADER	= curve.h curveList.h distance.h randomnum.h hash.h gridcurves.h cluster.h
+OBJS	= main.o curveList.o distance.o randomnum.o hash.o gridcurves.o cluster.o kfunctions.o
+SOURCE	= main.cpp curveList.cpp distance.cpp randomnum.cpp hash.cpp gridcurves.cpp cluster.cpp kfunctions.cpp
+HEADER	= curve.h curveList.h distance.h randomnum.h hash.h gridcurves.h cluster.h kfunctions.h
 OUT 	= kmeans
 CC	= g++
 FLAGS	= -c -g
@@ -28,6 +28,9 @@ gridcurves.o: gridcurves.cpp
 	
 cluster.o: cluster.cpp
 	$(CC) $(FLAGS) cluster.cpp
+	
+kfunctions.o: kfunctions.cpp
+	$(CC) $(FLAGS) kfunctions.cpp
 	
 clean:
 	rm -f $(OBJS)
