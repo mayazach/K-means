@@ -29,7 +29,6 @@ int main(int argc, char** argv){
 	CurveList queryList;//list to keep curves from query file
 	double** curve_t; //t values for creating grid curves
 	int rn = 10; //number of max R-neighbors to return;
-	string* rNeighbors = new string[rn]; //R-neighbors ids
 	int rIndex;
 	/** Variables for reading file input **/
 	string in;
