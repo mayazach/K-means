@@ -147,8 +147,18 @@ Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)
 
 }
 
+Curve* get_mean_discrete(Curve*p, Curve*q,dfd_res* result)
+{
 
 
+PairsList* traversal=optimal_traversal(p->m,q->m,result);
+Curve* mdfc=mean(traversal,*p,*q,p->dimension);
+delete traversal;
+
+
+
+return mdfc;
+}
 
 
 
@@ -265,131 +275,6 @@ dfd_res* dfd_new(Curve* p,Curve* q){
 }
 
 
-/*dokimasrikh main pou apla tha kalei th synartish*/
-int main()
-{
-  int i;
-  int j;
-  /*int dim=2;*/
 
-
-  /*dimiourgia curve p*/
-  Curve* p=new Curve();
-  p->m=2;
-  p->dimension=2;
-  p->points=new double*[(p->m)];
-  for(i=0;i<(p->m);i++)
-  {
-     p->points[i]=new double[p->dimension];
-  
-  }
-
-  /*dimiourgia curve q*/
-  Curve* q =new Curve();
-  q->m=2;
-  q->dimension=2;
-  q->points=new double*[(q->m)];
-  for(i=0;i<(q->m);i++)
-  {
-     q->points[i]=new double[p->dimension];
-
-
-  }
-
-  /*1	7	(-6.4227999999999996, 53.288000000000004), (-6.4257099999999996, 53.289299999999997), (-6.4268099999999997, 53.290300000000002), (-6.4268099999999997, 53.290300000000002), 
-     (-6.4268099999999997, 53.290300000000002), (-6.4271699999999994, 53.290599999999998), (-6.4271699999999994, 53.290599999999998)*/
-
-   /*dinodai times sta simeia twn cabilwn*/
-  p->points[0][0]=0;
-  p->points[0][1]=1;
-  p->points[1][0]=1;
-  p->points[1][1]=1;
-
-  q->points[0][0]=0;
-  q->points[0][1]=2;
-  q->points[1][0]=1;
-  q->points[1][1]=4;
-
-  cout<<"klish dfd\n";
-  /*double result*/
-  dfd_res* result;
-
-
-
-  /*KLISH dfd_new*/
-  result=dfd_new(p,q);
-  cout<<"print again\n";
-
-  /*TYPWNETAI O PINAKAS D*/
-  for(i=1;i<=(p->m);i++){
-        for(j=1;j<=(q->m);j++)
-        {
-        cout<<"i="<<i<<"j="<<j<<"  "<<"D="<<result->D[i][j]<<"\n";
-           
-        }
-  }
-  /*cout<<"result:"<<result<<"\n";*/
-
-
-  /*DIMIOURGEITAI H LISTA*/
-  PairsList* opt=optimal_traversal(2,2,result);
-  cout<<"each pair in PairsList has 2 points,one at each curve.1->1st point,point at position 0\n";
-  opt->print();
-
-  /*kataskeyh ths mean discete curve*/
-  /*xrisimopoieitai h lista gia na kathoristoun ta simeia twn kabilwn*/ 
-  /*pou tha xrisimopoihthoun*/
-  /*Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)*/
-  Curve* mdfc=mean(opt,*p,*q,p->dimension);
-  cout<<"printing mdfc\n";
-  cout<<"mdfc has  "<<mdfc->m<<"  points"<<"\n";
-  int a=0;
-  int b=0;
-  for(a=0;a<mdfc->m;a++)
-  {  
-     cout<<"point num "<<a<<"\n";
-     for(b=0;b<(mdfc->dimension);b++)
-     {
-        cout<<mdfc->points[a][b]<<" ";
-
-
-     }
-     cout<<"\n";
-
-   }
-   /*apodesmeysh xwrou*/
-   
-   cout<<"destroying PairsList\n";
-   delete opt;
-
-   cout<<"destoying struct with the dfd's result(distance-table D)\n";
-   delete result;
-   
-   cout<<"destroying mdfc\n";
-   for(i=0;i<mdfc->m;i++)
-   {   
-   delete[] mdfc->points[i] ;
-
-   }
-   delete[] mdfc->points;
-   delete mdfc;
-
-   /*apodesmeysh xwrou*/
-   cout<<"destroying points used in main\n";
-   for(i=0;i<(p->m);i++)
-   {
-      delete[] p->points[i];   
-
-   }
-   delete[] p->points;
-   delete p;
-   for(i=0;i<(q->m);i++)
-   {
-      delete[] q->points[i];
-
-   }
-   delete[] q->points;
-   delete q;
-}
 
 
