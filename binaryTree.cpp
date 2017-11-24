@@ -1,0 +1,94 @@
+#include <iostream>
+#include <cmath>
+#include "binaryTree.h"
+#include "curve.h"
+#include "curveList.h"
+
+using namespace std;
+
+BinTree::TreeNode::TreeNode(TreeNode *a=NULL,TreeNode *b=NULL){
+	left = a;
+	right = b;
+	leaf = false;
+	//cout << "Creating tree node." << endl;
+}
+
+BinTree::TreeNode::TreeNode(Curve c,TreeNode *a=NULL,TreeNode *b=NULL){
+	left = a;
+	right = b;
+	elem = c;
+	leaf = true;
+	//cout << "Creating tree node with curve." << endl;
+}
+
+BinTree::TreeNode::~TreeNode(){
+	if(left!=NULL)
+		delete left;
+	if(right!=NULL)
+		delete right;
+	//cout << "Deleting tree node" << endl;
+}
+
+void BinTree::TreeNode::printLeaf(){
+	if(left!=NULL)
+		left->printLeaf();
+	if(right!=NULL)
+		right->printLeaf();
+	if(leaf)
+		curvePrint(elem);
+}
+
+BinTree::BinTree(){
+	root = NULL;
+	height = 0;
+	//cout << "Creating binary tree" << endl;
+}
+
+BinTree::~BinTree(){
+	if(root!=NULL)
+		delete root;
+	//cout << "Deleting binary tree" << endl;
+}
+
+void BinTree::insertCurve(Curve c,int i,TreeNode *temp,int index){
+	int divide;
+	if(i >= height-1){
+		if(temp->left == NULL)
+			temp->left = new TreeNode(c);
+		else
+			temp->right = new TreeNode(c);
+	}
+	else{
+		divide = pow(2,height-i-1);
+		if(index < divide)
+			insertCurve(c,i+1,temp->left,index);
+		else
+			insertCurve(c,i+1,temp->right,index-divide);
+	}
+}
+
+void BinTree::createBranches(TreeNode *temp,int i){
+	if(i >= height-1)
+		return;
+	else{
+		temp->left = new TreeNode();
+		createBranches(temp->left,i+1);
+		temp->right = new TreeNode();
+		createBranches(temp->right,i+1);
+	}
+}
+
+void BinTree::constructTree(Curve curves[],int size){
+	int i;
+	height = (int) ceil(log2(size));
+	root = new TreeNode();
+	createBranches(root,0);
+	for(i=0;i<size;i++){
+		insertCurve(curves[i],0,root,i);
+	}
+}
+
+void BinTree::printLeaves(){
+	if(root!=NULL)
+		root->printLeaf();
+}
