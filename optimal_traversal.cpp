@@ -12,7 +12,7 @@ using namespace std;
 
 
 dfd_res::dfd_res(){ 
-   cout<<"struct dfd_res has been created"<<"\n";
+   //cout<<"struct dfd_res has been created"<<"\n";
 };
 dfd_res::dfd_res(int m1,int m2)
 {  
@@ -24,7 +24,7 @@ dfd_res::dfd_res(int m1,int m2)
 	{
 	   D[i]=new int[(m2+1)];
 	}
-   cout<<"struct dfd_res has been created"<<"\n";
+   //cout<<"struct dfd_res has been created"<<"\n";
 
 
 };
@@ -55,7 +55,7 @@ PairsList* optimal_traversal(int m1,int m2,dfd_res* dfd_result)
    tr.p=m1;
    tr.q=m2;
    traversal->push(tr);
-   cout<<"added an element at traversal list\n";
+   //cout<<"added an element at traversal list\n";
    
    /*syblirwsh ths listas traversal*/
    while(((tr.p)!=0)&&((tr.q)!=0))
@@ -104,7 +104,7 @@ PairsList* optimal_traversal(int m1,int m2,dfd_res* dfd_result)
 Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)
 {    
 
-     cout<<"Creating mean discrete frechet curve(mdfc)\n";
+     //cout<<"Creating mean discrete frechet curve(mdfc)\n";
      int i,j;
      Curve* mdfc=new Curve();
      mdfc->m=traversal->getSize();

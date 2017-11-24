@@ -1,6 +1,7 @@
 #ifndef BINARYTREE
 #define BINARYTREE
 #include "curve.h"
+#include "optimal_traversal.h"
 
 class BinTree{
 	struct TreeNode{
@@ -12,6 +13,7 @@ class BinTree{
 		TreeNode(Curve c,TreeNode *a,TreeNode *b);
 		~TreeNode();
 		void printLeaf();
+		Curve meanFrechet();
 	};
 	TreeNode *root;
 	int height;

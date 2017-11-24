@@ -220,8 +220,11 @@ int main(int argc, char** argv){
 	//for(i=0;i<clusters;i++)
 	//	clusterArray[i].print();
 
-	//mytree.constructTree(curveArray,10);
+	mytree.constructTree(curveArray,10);
 	//mytree.printLeaves();
+	
+	c = mytree.meanFrechet();
+	curvePrint(c);
 	
 	delete [] clusterArray;
 	

@@ -3,6 +3,7 @@
 #include "binaryTree.h"
 #include "curve.h"
 #include "curveList.h"
+#include "optimal_traversal.h"
 
 using namespace std;
 
@@ -36,6 +37,38 @@ void BinTree::TreeNode::printLeaf(){
 		right->printLeaf();
 	if(leaf)
 		curvePrint(elem);
+}
+
+Curve BinTree::TreeNode::meanFrechet(){
+	Curve a,b;
+	if(left == NULL)
+		a.id = "NULL";
+	else if(left->leaf)
+		a = left->elem;
+	else
+		a = left->meanFrechet();
+	if(right == NULL)
+		b.id = "NULL";
+	else if(right->leaf)
+		b = right->elem;
+	else
+		b = right->meanFrechet();
+	if((a.id == "NULL") && (b.id == "NULL")){
+		//cout << "no curves" << endl;
+		return a;
+	}
+	else if(a.id == "NULL"){
+		//cout << "Right curve" << endl;
+		return b;
+	}
+	else if(b.id == "NULL"){
+		//cout << "Left curve" << endl;
+		return a;
+	}
+	else{
+		//cout << "Two curves" << endl;
+		return *(get_mean_discrete(&a,&b));
+	}
 }
 
 BinTree::BinTree(){
@@ -91,4 +124,13 @@ void BinTree::constructTree(Curve curves[],int size){
 void BinTree::printLeaves(){
 	if(root!=NULL)
 		root->printLeaf();
+}
+
+Curve BinTree::meanFrechet(){
+	Curve a;
+	if(root != NULL)
+		a = root->meanFrechet();
+	//cout << "Got here safely" << endl;
+	a.id = "Frechet result!";
+	return a;
 }
