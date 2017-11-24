@@ -1,6 +1,6 @@
-OBJS	= main.o curveList.o distance.o randomnum.o hash.o gridcurves.o cluster.o kfunctions.o
-SOURCE	= main.cpp curveList.cpp distance.cpp randomnum.cpp hash.cpp gridcurves.cpp cluster.cpp kfunctions.cpp
-HEADER	= curve.h curveList.h distance.h randomnum.h hash.h gridcurves.h cluster.h kfunctions.h
+OBJS	= main.o curveList.o distance.o randomnum.o hash.o gridcurves.o cluster.o kfunctions.o optimal_traversal.o pairsList.o
+SOURCE	= main.cpp curveList.cpp distance.cpp randomnum.cpp hash.cpp gridcurves.cpp cluster.cpp kfunctions.cpp optimal_traversal.cpp pairsList.cpp
+HEADER	= curve.h curveList.h distance.h randomnum.h hash.h gridcurves.h cluster.h kfunctions.h optimal_traversal.h dfd_res.h pairsList.h
 OUT 	= kmeans
 CC	= g++
 FLAGS	= -c -g
@@ -31,6 +31,12 @@ cluster.o: cluster.cpp
 	
 kfunctions.o: kfunctions.cpp
 	$(CC) $(FLAGS) kfunctions.cpp
+	
+optimal_traversal.o: optimal_traversal.cpp
+	$(CC) $(FLAGS) optimal_traversal.cpp
+	
+pairsList.o: pairsList.cpp
+	$(CC) $(FLAGS) pairsList.cpp
 	
 clean:
 	rm -f $(OBJS)

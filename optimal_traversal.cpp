@@ -7,6 +7,7 @@
 #include "curve.h"
 #include "pairsList.h"
 #include "dfd_res.h"
+#include "distance.h"
 using namespace std;
 
 
@@ -158,20 +159,6 @@ delete traversal;
 
 
 return mdfc;
-}
-
-
-
-/*p->point of curve a,q->point of curve b b*/
-double euclidean(double* p,double* q,int dim){
-	double d=0;
-	int i;
-	for(i=0;i<dim;i++){
-	  d=d+pow((q[i]-p[i]),2.0);
-	  
-	}
-	d=sqrt(d);
-	return d;
 }
 
 /*tropopoiw thn dfd wste na ypologizei*/
