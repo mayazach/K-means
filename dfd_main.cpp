@@ -11,8 +11,102 @@
 
 using namespace std;
 
-/*dokimastikh main pou 1.ypologizei to dfd kai 2.ypologizei th mean discrete frechet curve*/
+/*dokimastikh main pou ypologizei th mean discrete frechet curve xwris na apaitei thn dfd*/
 int main()
+{
+  int i;
+  int j;
+  
+
+
+ 
+  Curve* p=new Curve();
+  p->m=2;
+  p->dimension=2;
+  p->points=new double*[(p->m)];
+  for(i=0;i<(p->m);i++)
+  {
+     p->points[i]=new double[p->dimension];
+  
+  }
+
+ 
+  Curve* q =new Curve();
+  q->m=2;
+  q->dimension=2;
+  q->points=new double*[(q->m)];
+  for(i=0;i<(q->m);i++)
+  {
+     q->points[i]=new double[p->dimension];
+
+
+  }
+
+
+  p->points[0][0]=0;
+  p->points[0][1]=1;
+  p->points[1][0]=1;
+  p->points[1][1]=1;
+
+  q->points[0][0]=0;
+  q->points[0][1]=2;
+  q->points[1][0]=1;
+  q->points[1][1]=4;
+ 
+
+  Curve* mdfc=get_mean_discrete(p,q);
+  cout<<"printing mdfc\n";
+  cout<<"mdfc has  "<<mdfc->m<<"  points"<<"\n";
+  int a=0;
+  int b=0;
+  for(a=0;a<mdfc->m;a++)
+  {  
+     cout<<"point num "<<a<<"\n";
+     for(b=0;b<(mdfc->dimension);b++)
+     {
+        cout<<mdfc->points[a][b]<<" ";
+
+
+     }
+     cout<<"\n";
+
+   }
+
+   
+   cout<<"destroying mdfc\n";
+   for(i=0;i<mdfc->m;i++)
+   {   
+   delete[] mdfc->points[i] ;
+
+   }
+   delete[] mdfc->points;
+   delete mdfc;
+
+  
+   cout<<"destroying points used in main\n";
+   for(i=0;i<(p->m);i++)
+   {
+      delete[] p->points[i];   
+
+   }
+   delete[] p->points;
+   delete p;
+   for(i=0;i<(q->m);i++)
+   {
+      delete[] q->points[i];
+
+   }
+   delete[] q->points;
+   delete q;
+}
+
+
+
+
+
+
+/*dokimastikh main pou 1.ypologizei to dfd kai 2.ypologizei th mean discrete frechet curve*/
+/*int main()
 {
 
 int i;
@@ -71,7 +165,7 @@ int i;
   }
  
 
-  Curve* mdfc=get_mean_discrete(p,q,result);
+  Curve* mdfc=get_mean_discrete_1(p,q,result);
   cout<<"printing mdfc\n";
   cout<<"mdfc has  "<<mdfc->m<<"  points"<<"\n";
   int a=0;
@@ -120,7 +214,7 @@ int i;
 }
 
 
-
+*/
 
 
 

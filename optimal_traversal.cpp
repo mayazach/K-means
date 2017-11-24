@@ -148,7 +148,7 @@ Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)
 
 }
 
-Curve* get_mean_discrete(Curve*p, Curve*q,dfd_res* result)
+Curve* get_mean_discrete_1(Curve*p, Curve*q,dfd_res* result)
 {
 
 
@@ -160,6 +160,8 @@ delete traversal;
 
 return mdfc;
 }
+
+
 
 /*tropopoiw thn dfd wste na ypologizei*/
 /*kai ton pinaka D*/
@@ -259,6 +261,22 @@ dfd_res* dfd_new(Curve* p,Curve* q){
 	delete[] C;
         return result;
 	/*return result->dist;*/
+}
+
+
+Curve *get_mean_discrete(Curve* p,Curve* q)
+{
+dfd_res* result=dfd_new(p,q);
+PairsList* traversal=optimal_traversal(p->m,q->m,result);
+Curve* mdfc=mean(traversal,*p,*q,p->dimension);
+delete result;
+delete traversal;
+
+return mdfc;
+
+
+
+
 }
 
 
