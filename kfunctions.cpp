@@ -4,6 +4,7 @@
 #include "curve.h"
 #include "cluster.h"
 #include "distance.h"
+#include "binaryTree.h"
 
 using namespace std;
 
@@ -51,4 +52,10 @@ void lloydAssignment(Curve curves[],int curveNum,Cluster clusters[],int clusterN
 			clusters[cluster].addPoint(curves[i]);
 		}
 	}
+}
+
+Curve meanFrechet(Curve *curves[],int curveNum){
+	BinTree mytree;
+	mytree.constructTree(*curves,curveNum);
+	return mytree.meanFrechet();
 }

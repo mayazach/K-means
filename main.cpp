@@ -13,7 +13,6 @@
 #include "hash.h"
 #include "gridcurves.h"
 #include "kfunctions.h"
-#include "binaryTree.h"
 
 using namespace std;
 
@@ -217,15 +216,11 @@ int main(int argc, char** argv){
 	
 	lloydAssignment(curveArray,n,clusterArray,clusters,func);
 	
-	BinTree mytree;
+	c = meanFrechet(&curveArray,n);
 	
 	//for(i=0;i<clusters;i++)
 	//	clusterArray[i].print();
 
-	mytree.constructTree(curveArray,10);
-	//mytree.printLeaves();
-	
-	c = mytree.meanFrechet();
 	curvePrint(c);
 	
 	delete [] clusterArray;
