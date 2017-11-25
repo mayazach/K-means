@@ -6,12 +6,17 @@
 class Cluster{
 	int id;
 	Curve center;
-	CurveList points;
+	int curveNumber;
+	Curve *points;
 public:
 	Cluster();
+	Cluster(int size);
+	void initArray(int size);
 	~Cluster();
 	int getId();
 	void setId(int id);
+	int getCurveNumber();
+	void setCurveNumber(int number);
 	Curve getCenter();
 	void setCenter(Curve center);
 	void addPoint(Curve point);

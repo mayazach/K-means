@@ -5,11 +5,22 @@
 using namespace std;
 
 Cluster::Cluster(){
-	
+	curveNumber = 0;
+	points = NULL;
+}
+
+Cluster::Cluster(int size){
+	curveNumber = 0;
+	points = new Curve[size];
 }
 
 Cluster::~Cluster(){
-	
+	if(points != NULL)
+		delete [] points;
+}
+
+void Cluster::initArray(int size){
+	points = new Curve[size];
 }
 
 int Cluster::getId(){
@@ -18,6 +29,14 @@ int Cluster::getId(){
 
 void Cluster::setId(int id){
 	this->id = id;
+}
+
+int Cluster::getCurveNumber(){
+	return this->curveNumber;
+}
+
+void Cluster::setCurveNumber(int number){
+	this->curveNumber = number;
 }
 
 Curve Cluster::getCenter(){
@@ -29,13 +48,15 @@ void Cluster::setCenter(Curve center){
 }
 
 void Cluster::addPoint(Curve point){
-	this->points.push(point);
+	this->points[curveNumber] = point;
+	curveNumber++;
 }
 
 void Cluster::print(){
+	int i;
 	cout << "Cluster: " << this->id << endl;
 	cout << "Center: " << endl;
-	curvePrint(this->center);
-	this->points.print();
+	for(i=0;i<curveNumber;i++)
+		curvePrint(this->points[i]);
 }
 

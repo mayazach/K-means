@@ -208,8 +208,10 @@ int main(int argc, char** argv){
 		curveArray[i++] = mylist.remove();
 	
 	clusterArray = new Cluster[clusters];
-	for(i=0;i<clusters;i++)
+	for(i=0;i<clusters;i++){
 		clusterArray[i].setId(i);
+		clusterArray[i].initArray(n);
+	}
 	
 	randomK(curveArray,n,clusterArray,clusters);
 	
