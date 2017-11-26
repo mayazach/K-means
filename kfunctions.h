@@ -8,6 +8,6 @@ void randomK(Curve curves[],int curveNum,Cluster clusters[],int clusterNum);
 
 void lloydAssignment(Curve curves[],int curveNum,Cluster clusters[],int clusterNum,char distance);
 
-Curve meanFrechet(Curve *curves[],int curveNum);
+Curve meanFrechet(Curve curves[],int curveNum);
 
 #endif

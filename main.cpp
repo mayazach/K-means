@@ -216,16 +216,27 @@ int main(int argc, char** argv){
 	
 	lloydAssignment(curveArray,n,clusterArray,clusters,func);
 	
-	c = meanFrechet(&curveArray,n);
+	c = meanFrechet(curveArray,10);
 	
+	for(i=0;i<c.m;i++)
+		delete [] c.points[i];
+	delete [] c.points;
+
 	//for(i=0;i<clusters;i++)
 	//	clusterArray[i].print();
 
-	curvePrint(c);
+	//curvePrint(c);
+	
+	//Cleanup
+	for(i=0;i<n;i++){
+		for(j=0;j<curveArray[i].m;j++)
+			delete [] curveArray[i].points[j];
+		delete [] curveArray[i].points;
+	}
+	delete [] curveArray;	
 	
 	delete [] clusterArray;
 	
-	delete [] curveArray;
 	
 	/** Closing files **/
 	input.close();

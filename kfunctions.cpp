@@ -54,8 +54,8 @@ void lloydAssignment(Curve curves[],int curveNum,Cluster clusters[],int clusterN
 	}
 }
 
-Curve meanFrechet(Curve *curves[],int curveNum){
+Curve meanFrechet(Curve curves[],int curveNum){
 	BinTree mytree;
-	mytree.constructTree(*curves,curveNum);
+	mytree.constructTree(curves,curveNum);
 	return mytree.meanFrechet();
 }

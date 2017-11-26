@@ -40,7 +40,8 @@ void BinTree::TreeNode::printLeaf(){
 }
 
 Curve BinTree::TreeNode::meanFrechet(){
-	Curve a,b;
+	Curve a,b,c;
+	int i;
 	if(left == NULL)
 		a.id = "NULL";
 	else if(left->leaf)
@@ -67,7 +68,18 @@ Curve BinTree::TreeNode::meanFrechet(){
 	}
 	else{
 		//cout << "Two curves" << endl;
-		return *(get_mean_discrete(&a,&b));
+		c = *(get_mean_discrete(&a,&b));
+		if(!left->leaf){
+			for(i=0;i<a.m;i++)
+				delete [] a.points[i];
+			delete [] a.points;
+		}
+		if(!right->leaf){
+			for(i=0;i<b.m;i++)
+				delete [] b.points[i];
+			delete [] b.points;
+		}
+		return c;
 	}
 }
 
