@@ -34,3 +34,16 @@ double marsaglia_num(){
    w=sqrt((-2.0*log(w))/w);
    return x1*w;
 }
+
+/*random double numbers-used in kmeans++ initialization*/
+double fRand(double fMin,double fMax)
+{
+   double f= (double)rand()/RAND_MAX;
+   return fMin+f*(fMax-fMin);
+
+
+
+
+}
+
+
