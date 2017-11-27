@@ -10,4 +10,6 @@ void lloydAssignment(Curve curves[],int curveNum,Cluster clusters[],int clusterN
 
 Curve meanFrechet(Curve curves[],int curveNum);
 
+void pam(Cluster clusters[],int clusterNum,char distance);
+
 #endif

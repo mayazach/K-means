@@ -19,6 +19,8 @@ public:
 	void setCurveNumber(int number);
 	Curve getCenter();
 	void setCenter(Curve center);
+	Curve* getPoints();
+	void setPoint(Curve point,int i);
 	void addPoint(Curve point);
 	void print();
 };

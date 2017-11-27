@@ -47,6 +47,15 @@ void Cluster::setCenter(Curve center){
 	this->center = center;
 }
 
+Curve* Cluster::getPoints(){
+	return this->points;
+}
+
+void Cluster::setPoint(Curve point,int i){
+	if(i < curveNumber)
+		this->points[i] = point;
+}
+
 void Cluster::addPoint(Curve point){
 	this->points[curveNumber] = point;
 	curveNumber++;

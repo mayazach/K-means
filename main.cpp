@@ -21,7 +21,7 @@ int main(int argc, char** argv){
 	ifstream config; //query dataset
 	ofstream output; //output file
 	bool complete = false,found = false;
-	int clusters;
+	int clusters,changes=0;
 	int k = 2, l = 3,i,j,count,dimension=2,hash_value,position;
 	int n=0; //number of curves in dataset
 	char func;
@@ -39,6 +39,7 @@ int main(int argc, char** argv){
 	hashTable** lTables;
 	Curve* curveArray;
 	Cluster* clusterArray;
+	string* oldCenters;
 
 	/**
 		In this section, command line input is checked and argument values are assigned
@@ -211,16 +212,30 @@ int main(int argc, char** argv){
 		clusterArray[i].setId(i);
 		clusterArray[i].initArray(n);
 	}
+	oldCenters = new string[clusters];
 	
 	randomK(curveArray,n,clusterArray,clusters);
-	
+
 	lloydAssignment(curveArray,n,clusterArray,clusters,func);
+
+	for(i=0;i<clusters;i++){
+		oldCenters[i] = clusterArray[i].getCenter().id;
+	}
+
+	pam(clusterArray,clusters,func);
+
+	for(i=0;i<clusters;i++){
+		if(clusterArray[i].getCenter().id != oldCenters[i])
+			changes++;
+		oldCenters[i] = clusterArray[i].getCenter().id;
+	}
+	cout << changes << endl;
 	
-	c = meanFrechet(curveArray,10);
+	//c = meanFrechet(curveArray,10);
 	
-	for(i=0;i<c.m;i++)
-		delete [] c.points[i];
-	delete [] c.points;
+	//for(i=0;i<c.m;i++)
+	//	delete [] c.points[i];
+	//delete [] c.points;
 
 	//for(i=0;i<clusters;i++)
 	//	clusterArray[i].print();
@@ -236,6 +251,8 @@ int main(int argc, char** argv){
 	delete [] curveArray;	
 	
 	delete [] clusterArray;
+
+	delete [] oldCenters;
 	
 	
 	/** Closing files **/
