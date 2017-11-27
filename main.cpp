@@ -193,7 +193,7 @@ int main(int argc, char** argv){
 		mylist.push(c);
 	}
 	n = mylist.getSize(); //get number of curves in dataset
-	tablesize = n/8; //Number of buckets in each hash table
+	tablesize = n/4; //Number of buckets in each hash table
 	
 	/**
 		Reading config file
@@ -202,10 +202,31 @@ int main(int argc, char** argv){
 	config >> c.id >> k;
 	config >> c.id >> l;
 	
+	/** Allocating memory and setting up arrays,lists and hashtables **/
+	/** Creating hash tables **/
+	lTables = new hashTable*[l];
+	for(i=0;i<l;i++)
+		lTables[i] = create_hashTable(tablesize);
+	/** Setting t values for the grid curves **/
+	curve_t = new double*[l];
+	for(i=0;i<l;i++)
+		curve_t[i] = new double[k];
+	for(i=0;i<l;i++){
+		for(j=0;j<k;j++)
+			curve_t[i][j] = ranf(d);
+	}
+	
 	curveArray = new Curve[n];
 	i=0;
-	while(!mylist.isEmpty())
-		curveArray[i++] = mylist.remove();
+	while(!mylist.isEmpty()){
+		c = mylist.remove();
+		curveArray[i++] = c;
+		for(j=0;j<l;j++){
+			hash_value = gridify(k,curve_t[0],c,d,'c',dimension);
+			position = hash_function(hash_value,tablesize);
+			hash_insert(c,position,lTables[j]);
+		}
+	}
 	
 	clusterArray = new Cluster[clusters];
 	for(i=0;i<clusters;i++){
@@ -255,11 +276,15 @@ int main(int argc, char** argv){
 			delete [] curveArray[i].points[j];
 		delete [] curveArray[i].points;
 	}
-	delete [] curveArray;	
-	
+	delete [] curveArray;
 	delete [] clusterArray;
-
 	delete [] oldCenters;
+	for(i=0;i<l;i++)
+		destroy_hashTable(lTables[i]);
+	delete [] lTables;
+	for(i=0;i<l;i++)
+		delete [] curve_t[i];
+	delete [] curve_t;
 	
 	
 	/** Closing files **/

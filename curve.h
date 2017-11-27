@@ -13,6 +13,8 @@ struct Curve{
 	std::string id;
 	int dimension;
 	double** points;
+	bool assigned;
+	std::string clusterId;
 };
 
 /**
