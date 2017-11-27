@@ -21,7 +21,7 @@ int main(int argc, char** argv){
 	ifstream config; //query dataset
 	ofstream output; //output file
 	bool complete = false,found = false;
-	int clusters,changes=0;
+	int clusters,changes;
 	int k = 2, l = 3,i,j,count,dimension=2,hash_value,position;
 	int n=0; //number of curves in dataset
 	char func;
@@ -213,34 +213,41 @@ int main(int argc, char** argv){
 		clusterArray[i].initArray(n);
 	}
 	oldCenters = new string[clusters];
+	changes = clusters;
 	
+	//Random-Lloyd's asignment-PAM
 	randomK(curveArray,n,clusterArray,clusters);
-
 	lloydAssignment(curveArray,n,clusterArray,clusters,func);
-
 	for(i=0;i<clusters;i++){
-		oldCenters[i] = clusterArray[i].getCenter().id;
+			oldCenters[i] = clusterArray[i].getCenter().id;
 	}
-
-	pam(clusterArray,clusters,func);
-
-	for(i=0;i<clusters;i++){
-		if(clusterArray[i].getCenter().id != oldCenters[i])
-			changes++;
-		oldCenters[i] = clusterArray[i].getCenter().id;
+	while(changes > 0){
+		changes = 0;
+		pam(clusterArray,clusters,func);
+		for(i=0;i<clusters;i++){
+			if(clusterArray[i].getCenter().id != oldCenters[i])
+				changes++;
+			oldCenters[i] = clusterArray[i].getCenter().id;
+		}
+		cout << changes << endl;
+		if(changes > 0)
+			lloydAssignment(curveArray,n,clusterArray,clusters,func);
 	}
-	cout << changes << endl;
-	
-	//c = meanFrechet(curveArray,10);
-	
-	//for(i=0;i<c.m;i++)
-	//	delete [] c.points[i];
-	//delete [] c.points;
-
-	//for(i=0;i<clusters;i++)
-	//	clusterArray[i].print();
-
-	//curvePrint(c);
+	output << "Algorithm: Random-Lloyd's-PAM" << endl;
+	if(func == 'f')
+		output << "Metric: Frechet" << endl;
+	else
+		output << "Metric: DTW" << endl;
+	if(!complete)
+		for(i=0;i<clusters;i++)
+			output << "CLUSTER-" << i+1 << " {size: " << clusterArray[i].getCurveNumber() << ", centroid: " << clusterArray[i].getCenter().id << "}" << endl;
+	else
+		for(i=0;i<clusters;i++){
+			output << "CLUSTER-" << i+1 << " {";
+			for(j=0;j<clusterArray[i].getCurveNumber()-1;j++)
+				output << clusterArray[i].getPoints()[j].id << ", ";
+			output << clusterArray[i].getPoints()[j].id << "}" << endl;
+		}
 	
 	//Cleanup
 	for(i=0;i<n;i++){

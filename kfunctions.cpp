@@ -20,6 +20,8 @@ void lloydAssignment(Curve curves[],int curveNum,Cluster clusters[],int clusterN
 	int i,j,cluster;
 	double min,temp;
 	Curve c;
+	for(i=0;i<clusterNum;i++)
+		clusters[i].setCurveNumber(0);
 	if(distance == 'f'){
 		for(i=0;i<curveNum;i++){
 			cluster = 0;
