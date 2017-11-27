@@ -13,6 +13,7 @@
 #include "hash.h"
 #include "gridcurves.h"
 #include "kfunctions.h"
+#include "kmeans_initialization.h"
 
 using namespace std;
 
@@ -215,7 +216,6 @@ int main(int argc, char** argv){
 		for(j=0;j<k;j++)
 			curve_t[i][j] = ranf(d);
 	}
-	
 	curveArray = new Curve[n];
 	i=0;
 	while(!mylist.isEmpty()){
@@ -227,16 +227,16 @@ int main(int argc, char** argv){
 			hash_insert(c,position,lTables[j]);
 		}
 	}
-	
 	clusterArray = new Cluster[clusters];
 	for(i=0;i<clusters;i++){
 		clusterArray[i].setId(i);
 		clusterArray[i].initArray(n);
 	}
-	oldCenters = new string[clusters];
-	changes = clusters;
 	
+	oldCenters = new string[clusters];
 	//Random-Lloyd's asignment-PAM
+	changes = clusters;
+	cout << "Random-LLoyd-PAM" << endl;
 	randomK(curveArray,n,clusterArray,clusters);
 	lloydAssignment(curveArray,n,clusterArray,clusters,func);
 	for(i=0;i<clusters;i++){
@@ -269,7 +269,111 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
-	
+	//Random-LSH-PAM
+	changes = clusters;
+	cout << "Random-LSH-PAM" << endl;
+	randomK(curveArray,n,clusterArray,clusters);
+	lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
+	for(i=0;i<clusters;i++){
+			oldCenters[i] = clusterArray[i].getCenter().id;
+	}
+	while(changes > 0){
+		changes = 0;
+		pam(clusterArray,clusters,func);
+		for(i=0;i<clusters;i++){
+			if(clusterArray[i].getCenter().id != oldCenters[i])
+				changes++;
+			oldCenters[i] = clusterArray[i].getCenter().id;
+		}
+		cout << changes << endl;
+		if(changes > 0)
+			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+	}
+	output << endl << "Algorithm: Random-LSH-PAM" << endl;
+	if(func == 'f')
+		output << "Metric: Frechet" << endl;
+	else
+		output << "Metric: DTW" << endl;
+	if(!complete)
+		for(i=0;i<clusters;i++)
+			output << "CLUSTER-" << i+1 << " {size: " << clusterArray[i].getCurveNumber() << ", centroid: " << clusterArray[i].getCenter().id << "}" << endl;
+	else
+		for(i=0;i<clusters;i++){
+			output << "CLUSTER-" << i+1 << " {";
+			for(j=0;j<clusterArray[i].getCurveNumber()-1;j++)
+				output << clusterArray[i].getPoints()[j].id << ", ";
+			output << clusterArray[i].getPoints()[j].id << "}" << endl;
+		}
+	//K++-Lloyd-PAM
+	changes = clusters;
+	cout << "Random-LLoyd-PAM" << endl;
+	Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
+	lloydAssignment(curveArray,n,clusterArray,clusters,func);
+	for(i=0;i<clusters;i++){
+			oldCenters[i] = clusterArray[i].getCenter().id;
+	}
+	while(changes > 0){
+		changes = 0;
+		pam(clusterArray,clusters,func);
+		for(i=0;i<clusters;i++){
+			if(clusterArray[i].getCenter().id != oldCenters[i])
+				changes++;
+			oldCenters[i] = clusterArray[i].getCenter().id;
+		}
+		cout << changes << endl;
+		if(changes > 0)
+			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+	}
+	output << endl << "Algorithm: K++-Lloyd's-PAM" << endl;
+	if(func == 'f')
+		output << "Metric: Frechet" << endl;
+	else
+		output << "Metric: DTW" << endl;
+	if(!complete)
+		for(i=0;i<clusters;i++)
+			output << "CLUSTER-" << i+1 << " {size: " << clusterArray[i].getCurveNumber() << ", centroid: " << clusterArray[i].getCenter().id << "}" << endl;
+	else
+		for(i=0;i<clusters;i++){
+			output << "CLUSTER-" << i+1 << " {";
+			for(j=0;j<clusterArray[i].getCurveNumber()-1;j++)
+				output << clusterArray[i].getPoints()[j].id << ", ";
+			output << clusterArray[i].getPoints()[j].id << "}" << endl;
+		}
+	//K++-LSH-PAM
+	changes = clusters;
+	cout << "Random-LLoyd-PAM" << endl;
+	Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
+	lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
+	for(i=0;i<clusters;i++){
+			oldCenters[i] = clusterArray[i].getCenter().id;
+	}
+	while(changes > 0){
+		changes = 0;
+		pam(clusterArray,clusters,func);
+		for(i=0;i<clusters;i++){
+			if(clusterArray[i].getCenter().id != oldCenters[i])
+				changes++;
+			oldCenters[i] = clusterArray[i].getCenter().id;
+		}
+		cout << changes << endl;
+		if(changes > 0)
+			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+	}
+	output << endl << "Algorithm: K++-LSH-PAM" << endl;
+	if(func == 'f')
+		output << "Metric: Frechet" << endl;
+	else
+		output << "Metric: DTW" << endl;
+	if(!complete)
+		for(i=0;i<clusters;i++)
+			output << "CLUSTER-" << i+1 << " {size: " << clusterArray[i].getCurveNumber() << ", centroid: " << clusterArray[i].getCenter().id << "}" << endl;
+	else
+		for(i=0;i<clusters;i++){
+			output << "CLUSTER-" << i+1 << " {";
+			for(j=0;j<clusterArray[i].getCurveNumber()-1;j++)
+				output << clusterArray[i].getPoints()[j].id << ", ";
+			output << clusterArray[i].getPoints()[j].id << "}" << endl;
+		}
 	//Cleanup
 	for(i=0;i<n;i++){
 		for(j=0;j<curveArray[i].m;j++)

@@ -14,7 +14,7 @@ struct Curve{
 	int dimension;
 	double** points;
 	bool assigned;
-	std::string clusterId;
+	int clusterId;
 };
 
 /**
