@@ -68,13 +68,18 @@ Curve BinTree::TreeNode::meanFrechet(){
 	}
 	else{
 		//cout << "Two curves" << endl;
-		c = *(get_mean_discrete(&a,&b));
-		if(!left->leaf){
+		c = get_mean_discrete(&a,&b);
+		c.inDataset = false;
+		if(!left->leaf && !a.inDataset){
+			if(a.inDataset)
+				cout << "Deleting dataset curve!" << endl;
 			for(i=0;i<a.m;i++)
 				delete [] a.points[i];
 			delete [] a.points;
 		}
-		if(!right->leaf){
+		if(!right->leaf && !b.inDataset){
+			if(b.inDataset)
+				cout << "Deleting dataset curve!" << endl;
 			for(i=0;i<b.m;i++)
 				delete [] b.points[i];
 			delete [] b.points;
@@ -92,7 +97,7 @@ BinTree::BinTree(){
 BinTree::~BinTree(){
 	if(root!=NULL)
 		delete root;
-	//cout << "Deleting binary tree" << endl;
+	cout << "Deleting binary tree" << endl;
 }
 
 void BinTree::insertCurve(Curve c,int i,TreeNode *temp,int index){

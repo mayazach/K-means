@@ -14,6 +14,7 @@
 #include "gridcurves.h"
 #include "kfunctions.h"
 #include "kmeans_initialization.h"
+#include "binaryTree.h"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ int main(int argc, char** argv){
 	hashTable** lTables;
 	Curve* curveArray;
 	Cluster* clusterArray;
+	BinTree* treeArray;
 	string* oldCenters;
 
 	/**
@@ -171,6 +173,7 @@ int main(int argc, char** argv){
 			}
 			ss.clear();
 		}
+		c.inDataset = true;
 		mylist.push(c);
 	}
 	//c.dimension = dimension;
@@ -191,6 +194,7 @@ int main(int argc, char** argv){
 			}
 			ss.clear();
 		}
+		c.inDataset = true;
 		mylist.push(c);
 	}
 	n = mylist.getSize(); //get number of curves in dataset
@@ -341,7 +345,7 @@ int main(int argc, char** argv){
 		}
 	//K++-LSH-PAM
 	changes = clusters;
-	cout << "Random-LLoyd-PAM" << endl;
+	cout << "Random-LSH-PAM" << endl;
 	Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
 	lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
 	for(i=0;i<clusters;i++){
@@ -374,6 +378,29 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
+	if(func == 'f'){
+		cout << "Random-Lloyd-Frechet" << endl;
+		Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
+		lloydAssignment(curveArray,n,clusterArray,clusters,func);
+		for(i=0;i<clusters;i++){
+			oldCenters[i] = clusterArray[i].getCenter().id;
+		}
+		treeArray = new BinTree[clusters];
+		for(i=0;i<clusters;i++){
+			treeArray[i].constructTree(clusterArray[i].getPoints(),clusterArray[i].getCurveNumber());
+			cout << "Cluster " << i << endl;
+			clusterArray[i].setCenter(treeArray[i].meanFrechet());
+		}
+		delete [] treeArray;
+	}
+	/*
+	BinTree mytree;
+	c = mytree.meanFrechet();
+	curvePrint(c);
+	for(i=0;i<c.m;i++)
+		delete [] c.points[i];
+	delete [] c.points;
+	*/
 	//Cleanup
 	for(i=0;i<n;i++){
 		for(j=0;j<curveArray[i].m;j++)
@@ -381,6 +408,12 @@ int main(int argc, char** argv){
 		delete [] curveArray[i].points;
 	}
 	delete [] curveArray;
+	for(i=0;i<clusters;i++){
+		c = clusterArray[i].getCenter();
+		for(j=0;j<c.m;j++)
+			delete [] c.points[j];
+		delete [] c.points;
+	}
 	delete [] clusterArray;
 	delete [] oldCenters;
 	for(i=0;i<l;i++)

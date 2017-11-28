@@ -8,6 +8,8 @@
 **/
 void curvePrint(Curve curve);
 
+bool equalCurves(Curve a,Curve b);
+
 class CurveList{
 
 	struct CurveNode{

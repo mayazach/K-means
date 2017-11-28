@@ -24,6 +24,16 @@ void curvePrint(Curve curve){
 	}
 }
 
+bool equalCurves(Curve a,Curve b){
+	int i,j;
+	if((a.m != b.m) || (a.dimension != b.dimension))
+		return false;
+	for(i=0;i<a.m;i++)
+		for(j=0;j<a.dimension;j++)
+			if(a.points[i][j] != b.points[i][j])
+				return false;
+	return true;
+}
 
 CurveList::CurveList(){
 	head = NULL;

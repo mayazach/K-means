@@ -14,6 +14,7 @@ struct Curve{
 	int dimension;
 	double** points;
 	bool assigned;
+	bool inDataset;
 	int clusterId;
 };
 

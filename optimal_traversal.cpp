@@ -101,18 +101,18 @@ PairsList* optimal_traversal(int m1,int m2,dfd_res* dfd_result)
 
 /*find the mean of curves*/
 /*epistrefei kabylh pou adistoixei sth mean discete frechet curve*/
-Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)
+Curve mean(PairsList* traversal,Curve p,Curve q,int dimension)
 {    
 
      //cout<<"Creating mean discrete frechet curve(mdfc)\n";
      int i,j;
-     Curve* mdfc=new Curve();
-     mdfc->m=traversal->getSize();
-     mdfc->dimension=dimension;
-     mdfc->points=new double*[(mdfc->m)];
-     for(i=0;i<(mdfc->m);i++)
+     Curve mdfc;;
+     mdfc.m=traversal->getSize();
+     mdfc.dimension=dimension;
+     mdfc.points=new double*[(mdfc.m)];
+     for(i=0;i<(mdfc.m);i++)
      {
-        mdfc->points[i]=new double[mdfc->dimension];
+        mdfc.points[i]=new double[mdfc.dimension];
 
 
      }
@@ -121,13 +121,13 @@ Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)
      
      Pair current;
      i=1;
-     while(i<=(mdfc->m))
+     while(i<=(mdfc.m))
      {   
          /*cout<<"i="<<i<<"\n";*/
          current=traversal->remove();
-         for(j=0;j<mdfc->dimension;j++)
+         for(j=0;j<mdfc.dimension;j++)
          {
-         mdfc->points[i-1][j]=(p.points[(current.p)-1][j]+q.points[(current.q)-1][j])/2;
+         mdfc.points[i-1][j]=(p.points[(current.p)-1][j]+q.points[(current.q)-1][j])/2;
 
 
 
@@ -148,12 +148,12 @@ Curve* mean(PairsList* traversal,Curve p,Curve q,int dimension)
 
 }
 
-Curve* get_mean_discrete_1(Curve*p, Curve*q,dfd_res* result)
+Curve get_mean_discrete_1(Curve*p, Curve*q,dfd_res* result)
 {
 
 
 PairsList* traversal=optimal_traversal(p->m,q->m,result);
-Curve* mdfc=mean(traversal,*p,*q,p->dimension);
+Curve mdfc=mean(traversal,*p,*q,p->dimension);
 delete traversal;
 
 
@@ -264,11 +264,11 @@ dfd_res* dfd_new(Curve* p,Curve* q){
 }
 
 
-Curve *get_mean_discrete(Curve* p,Curve* q)
+Curve get_mean_discrete(Curve* p,Curve* q)
 {
 dfd_res* result=dfd_new(p,q);
 PairsList* traversal=optimal_traversal(p->m,q->m,result);
-Curve* mdfc=mean(traversal,*p,*q,p->dimension);
+Curve mdfc=mean(traversal,*p,*q,p->dimension);
 delete result;
 delete traversal;
 
