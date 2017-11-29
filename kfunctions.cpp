@@ -26,6 +26,8 @@ void lloydAssignment(Curve curves[],int curveNum,Cluster clusters[],int clusterN
 		clusters[i].setCurveNumber(0);
 	if(distance == 'f'){
 		for(i=0;i<curveNum;i++){
+			if(!curves[i].inDataset)
+				continue;
 			cluster = 0;
 			c = clusters[0].getCenter();
 			min = dfd(&(curves[i]),&c);
@@ -89,7 +91,6 @@ void lshAssignment(hashTable* table[],int hashNum,int tablesize,int k,double d,d
 		}
 	}
 	r = min/2;
-	cout << r << endl;
 	while((assignments < curveNum) && (clustersUpdated > 0)){
 	for(i=0;i<clusterNum;i++)
 		updated[i] = false;
@@ -140,6 +141,8 @@ void lshAssignment(hashTable* table[],int hashNum,int tablesize,int k,double d,d
 		if(curves[i].assigned)
 			clusters[curves[i].clusterId].addPoint(curves[i]);
 		else{
+			if(!curves[i].inDataset)
+				continue;
 			temp = clusters[0].getCenter();
 			if(distance == 'f')
 				min = dfd(&temp,&(curves[i]));

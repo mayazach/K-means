@@ -293,7 +293,7 @@ int main(int argc, char** argv){
 		}
 		cout << changes << endl;
 		if(changes > 0)
-			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+			lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
 	}
 	output << endl << "Algorithm: Random-LSH-PAM" << endl;
 	if(func == 'f')
@@ -363,7 +363,7 @@ int main(int argc, char** argv){
 		}
 		cout << changes << endl;
 		if(changes > 0)
-			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+			lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
 	}
 	output << endl << "Algorithm: K++-LSH-PAM" << endl;
 	if(func == 'f')
@@ -380,6 +380,7 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
+
 	if(func == 'f'){
 		//Random-LLoyd-Frechet
 		changes = 0;
@@ -413,9 +414,11 @@ int main(int argc, char** argv){
 					changes++;
 			}
 			for(i=0;i<clusters;i++){
+				if(!oldCurves[i].inDataset){
 				for(j=0;j<oldCurves[i].m;j++)
 					delete [] oldCurves[i].points[j];
 				delete [] oldCurves[i].points;
+				}
 				oldCurves[i] = clusterArray[i].getCenter();
 			}
 			count++;
@@ -452,9 +455,11 @@ int main(int argc, char** argv){
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
+			if(!c.inDataset){
 			for(j=0;j<c.m;j++)
 				delete [] c.points[j];
 			delete [] c.points;
+			}
 		}
 		//Random-LSH-Frechet
 		changes = 0;
@@ -488,14 +493,16 @@ int main(int argc, char** argv){
 					changes++;
 			}
 			for(i=0;i<clusters;i++){
+				if(!oldCurves[i].inDataset){
 				for(j=0;j<oldCurves[i].m;j++)
 					delete [] oldCurves[i].points[j];
 				delete [] oldCurves[i].points;
+				}
 				oldCurves[i] = clusterArray[i].getCenter();
 			}
 			count++;
 			cout << changes << endl;
-			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+			lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
 			delete [] treeArray;
 		}
 		output << endl << "Algorithm: Random-LSH-Frechet" << endl;
@@ -527,9 +534,11 @@ int main(int argc, char** argv){
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
+			if(!c.inDataset){
 			for(j=0;j<c.m;j++)
 				delete [] c.points[j];
 			delete [] c.points;
+			}
 		}
 		//Kmeans++-LLoyd-Frechet
 		changes = 0;
@@ -563,9 +572,11 @@ int main(int argc, char** argv){
 					changes++;
 			}
 			for(i=0;i<clusters;i++){
+				if(!oldCurves[i].inDataset){
 				for(j=0;j<oldCurves[i].m;j++)
 					delete [] oldCurves[i].points[j];
 				delete [] oldCurves[i].points;
+				}
 				oldCurves[i] = clusterArray[i].getCenter();
 			}
 			count++;
@@ -602,9 +613,11 @@ int main(int argc, char** argv){
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
+			if(!c.inDataset){
 			for(j=0;j<c.m;j++)
 				delete [] c.points[j];
 			delete [] c.points;
+			}
 		}
 		//K++-LSH-Frechet
 		changes = 0;
@@ -638,9 +651,11 @@ int main(int argc, char** argv){
 					changes++;
 			}
 			for(i=0;i<clusters;i++){
+				if(!oldCurves[i].inDataset){
 				for(j=0;j<oldCurves[i].m;j++)
 					delete [] oldCurves[i].points[j];
 				delete [] oldCurves[i].points;
+				}
 				oldCurves[i] = clusterArray[i].getCenter();
 			}
 			count++;
@@ -677,9 +692,11 @@ int main(int argc, char** argv){
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
+			if(!c.inDataset){
 			for(j=0;j<c.m;j++)
 				delete [] c.points[j];
 			delete [] c.points;
+			}
 		}
 	}
 	//Cleanup
