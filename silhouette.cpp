@@ -28,7 +28,8 @@ double max_num(double a,double b)
 }
 
 
-void dfd_silhouette(Cluster clusters[],int k)
+
+double* dfd_silhouette(Cluster clusters[],int k)
 {   
     /*distance='f';*/
     /*gia kathe cluster vriskei to pio kodino cluster*/
@@ -58,7 +59,7 @@ void dfd_silhouette(Cluster clusters[],int k)
     neighbours=new int[k];
     for(cl_num=0;cl_num<k;cl_num++)
     {
-    cout<<"cl_num="<<cl_num<<"\n";
+    /*cout<<"cl_num="<<cl_num<<"\n";*/
     center=clusters[cl_num].getCenter();
     minCenDist=-1;
     for(i=0;i<k;i++)
@@ -81,8 +82,8 @@ void dfd_silhouette(Cluster clusters[],int k)
           else{
              tempCen=clusters[i].getCenter();
              tempDist=dfd(&center,&tempCen);
-             cout<<"minCenDist"<<minCenDist<<" ";
-             cout<<"tempDist"<<tempDist<<"\n";
+             /*cout<<"minCenDist"<<minCenDist<<" ";
+             cout<<"tempDist"<<tempDist<<"\n";*/
              if(tempDist<minCenDist)
              { 
                nearCenCurv=tempCen;
@@ -101,14 +102,14 @@ void dfd_silhouette(Cluster clusters[],int k)
     }
     /*typwnw*/
     cout<<"\n";
-    for(cl_num=0;cl_num<k;cl_num++)
+    /*for(cl_num=0;cl_num<k;cl_num++)
     {   
        cout<<"center curve id"<<clusters[cl_num].getId();
        cout<<"neighbour curve id"<<clusters[neighbours[cl_num]].getId();
        cout<<"\n";
 
     
-    }
+    }*/
    
  
     double sum;
@@ -160,7 +161,7 @@ void dfd_silhouette(Cluster clusters[],int k)
     }
     /*average silhouette gia 1 cluster*/
     sil_table[cl_num]=sum/(clusters[cl_num].getCurveNumber());
-    cout<<"sil["<<cl_num<<"]="<<sil_table[cl_num]<<"\n";
+    /*cout<<"sil["<<cl_num<<"]="<<sil_table[cl_num]<<"\n";*/
     
    /*apodemeysh xwrou sto telos 1 epanalisphs*/
     delete[] a;
@@ -177,20 +178,20 @@ void dfd_silhouette(Cluster clusters[],int k)
    /*to synoliko silhouete apothikeuetai sthn teleutaia thesh tou pinaka*/
    /*typwnw gia kathe cluster tis times silhouette*/
    
-   for(cl_num=0;cl_num<k;cl_num++)
+   /*for(cl_num=0;cl_num<k;cl_num++)
     {
 
     cout<<"sil["<<cl_num<<"]="<<sil_table[cl_num]<<"\n";
 
     }
-    cout<<"synoliko silhouette sil["<<cl_num<<"]="<<sil_table[cl_num]<<"\n";
+    cout<<"synoliko silhouette sil["<<cl_num<<"]="<<sil_table[cl_num]<<"\n";*/
   
     /*apodesmeysh xwrou sto telos ths synartishs*/
    /*delete[] neighboursArray;*/
    delete[] neighbours;
   
 
-   /*return sil_table;*/
+   return sil_table;
      
  }
 

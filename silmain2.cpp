@@ -287,29 +287,40 @@ ifstream input; //input dataset
 
 /*exei ginei to clustering-kalw th silhouettes*/ 
 /*double* sil=silhouette(Cluster clusters[],int k);*/
+double* sil_table;
 if(func=='f')
 {
-dfd_silhouette(clusterArray,clusters);
+sil_table=dfd_silhouette(clusterArray,clusters);
 }
 cout<<"back to main\n";
+
+for(i=0;i<clusters;i++)
+    {
+
+    cout<<"sil["<<i<<"]="<<sil_table[i]<<"\n";
+
+    }
+    cout<<"synoliko silhouette sil["<<i<<"]="<<sil_table[i]<<"\n";
+
+
 for(i=0;i<n;i++){
 		for(j=0;j<curveArray[i].m;j++)
 			delete [] curveArray[i].points[j];
 		delete [] curveArray[i].points;
 	}
-        cout<<"ok1\n";
+        /*cout<<"ok1\n";*/
 	delete [] curveArray;
-        cout<<"ok2\n";
+        /*cout<<"ok2\n";*/
 	for(i=0;i<clusters;i++){
 		c = clusterArray[i].getCenter();
-                cout<<"ok3\n";
+                /*cout<<"ok3\n";*/
 		/*for(j=0;j<c.m;j++)
 			delete [] c.points[j];
 		delete [] c.points;*/
-                cout<<"ok4\n";
+                /*cout<<"ok4\n";*/
 	}
 	delete [] clusterArray;
-        cout<<"ok5";
+        /*cout<<"ok5";*/
 	delete [] oldCenters;
 
 
@@ -320,6 +331,6 @@ for(i=0;i<n;i++){
 
 
 
-cout<<"ok\n";
+cout<<"end\n";
 
 }
