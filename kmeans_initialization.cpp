@@ -133,15 +133,15 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
            }
            
        }
-       cout<<"distSum="<<distSum<<"\n";
-       cout <<"okey\n";
+       //cout<<"distSum="<<distSum<<"\n";
+       //cout <<"okey\n";
        /*ypologismos pithanothtas*/
        for(i=0;i<curveNum;i++)
        {   
            if(is_center[i]==0)
            {
               probability[i]=pow(distToCen[i],2)/distSum;
-              cout<<"probability["<<i<<"]="<<probability[i]<<"\n";
+              //cout<<"probability["<<i<<"]="<<probability[i]<<"\n";
            }
        }
        /*kathorismos diasthmatwn kai megisths timhs me vash thn pithanithta*/
@@ -152,7 +152,7 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
             {
                max_value=max_value+probability[i];
                choiceSpaces[i]=max_value;
-               cout<<"choiceSpaces["<<i<<"]="<<choiceSpaces[i]<<"\n";
+               //cout<<"choiceSpaces["<<i<<"]="<<choiceSpaces[i]<<"\n";
             }
 
 
@@ -161,7 +161,7 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
        
      
        random_value=fRand(0,max_value);
-       cout<<"random_value="<<random_value<<"\n";
+       //cout<<"random_value="<<random_value<<"\n";
         /*epilogh kedrou me vash thn tyxaia timh-ginetai xrish ths analogikhs pithanothtas*/
        while(random_value>choiceSpaces[center])
        {
@@ -174,7 +174,7 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
 
        }
        choiceSpaces[center]=0;
-       cout<<"center="<<center<<"\n";
+       //cout<<"center="<<center<<"\n";
         
        /*sto telos ths epanalipshs tha exei th thesh tou center*/
        
@@ -190,16 +190,16 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
        
        
        /*eisagoume thn kabylh ston pinaka twn clusters*/
-       cout<<"center"<<center;
-       cout<<"\n";
-       cout<<"clusterCurNum="<<clusterCurNum<<"\n";
+       //cout<<"center"<<center;
+       //cout<<"\n";
+       //cout<<"clusterCurNum="<<clusterCurNum<<"\n";
        }
-       cout<<"curves-cluster-centers:\n";
+       //cout<<"curves-cluster-centers:\n";
        for(i=0;i<curveNum;i++)
        {
           if(is_center[i]==1)
           {
-          cout<<"curve"<<i<<"\n";
+          //cout<<"curve"<<i<<"\n";
           }
        }
        }
@@ -262,19 +262,19 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
            if(is_center[i]==0)
            {
              distToCen[i]=distToCen[i]/max;
-             cout <<"distToCen["<<i<<"]="<<distToCen[i]<<"\n";
+             //cout <<"distToCen["<<i<<"]="<<distToCen[i]<<"\n";
              distSum=distSum+pow(distToCen[i],2);
            }
        }
-       cout<<"distSum="<<distSum<<"\n";
-       cout <<"okey\n";
+       //cout<<"distSum="<<distSum<<"\n";
+       //cout <<"okey\n";
        /*ypologismos pithanothtas*/
        for(i=0;i<curveNum;i++)
        {   
            if(is_center[i]==0)
            {
               probability[i]=pow(distToCen[i],2)/distSum;
-              cout<<"probability["<<i<<"]="<<probability[i]<<"\n";
+              //cout<<"probability["<<i<<"]="<<probability[i]<<"\n";
            }
        }
        /*kathorismos diasthmatwn kai megisths timhs me vash thn pithanithta*/
@@ -285,7 +285,7 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
             {
                max_value=max_value+probability[i];
                choiceSpaces[i]=max_value;
-               cout<<"choiceSpaces["<<i<<"]="<<choiceSpaces[i]<<"\n";
+               //cout<<"choiceSpaces["<<i<<"]="<<choiceSpaces[i]<<"\n";
             }
             if(is_center[i]==2)
             {
@@ -298,7 +298,7 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
        
      
        random_value=fRand(0,max_value);
-       cout<<"random_value="<<random_value<<"\n";
+       //cout<<"random_value="<<random_value<<"\n";
         /*epilogh kedrou me vash thn tyxaia timh-ginetai xrish ths analogikhs pithanothtas*/
        while(random_value>choiceSpaces[center])
        {
@@ -311,7 +311,7 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
 
        }
        choiceSpaces[center]=0;
-       cout<<"center="<<center<<"\n";
+       //cout<<"center="<<center<<"\n";
         
        /*sto telos ths epanalipshs tha exei th thesh tou center*/
        
@@ -327,9 +327,9 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
        
        
        /*eisagoume thn kabylh ston pinaka twn clusters*/
-       cout<<"center"<<center;
-       cout<<"\n";
-       cout<<"clusterCurNum="<<clusterCurNum<<"\n";
+       //cout<<"center"<<center;
+       //cout<<"\n";
+       //cout<<"clusterCurNum="<<clusterCurNum<<"\n";
        
        for(i=0;i<curveNum;i++)
        {
@@ -342,12 +342,12 @@ void Kmeans_initialization(Curve curves[],int curveNum,Cluster clusters[],int cl
 
        }
        }
-       cout<<"curves-cluster-centers:\n";
+       //cout<<"curves-cluster-centers:\n";
        for(i=0;i<curveNum;i++)
        {
           if(is_center[i]==1)
           {
-          cout<<"curve"<<i<<"\n";
+          //cout<<"curve"<<i<<"\n";
           }
        }      
        }

@@ -97,7 +97,7 @@ BinTree::BinTree(){
 BinTree::~BinTree(){
 	if(root!=NULL)
 		delete root;
-	cout << "Deleting binary tree" << endl;
+	//cout << "Deleting binary tree" << endl;
 }
 
 void BinTree::insertCurve(Curve c,int i,TreeNode *temp,int index){
