@@ -43,6 +43,7 @@ int main(int argc, char** argv){
 	Cluster* clusterArray;
 	BinTree* treeArray;
 	string* oldCenters;
+	Curve* oldCurves;
 
 	/**
 		In this section, command line input is checked and argument values are assigned
@@ -238,6 +239,7 @@ int main(int argc, char** argv){
 	}
 	
 	oldCenters = new string[clusters];
+	oldCurves = new Curve[clusters];
 	//Random-Lloyd's asignment-PAM
 	changes = clusters;
 	cout << "Random-LLoyd-PAM" << endl;
@@ -310,7 +312,7 @@ int main(int argc, char** argv){
 		}
 	//K++-Lloyd-PAM
 	changes = clusters;
-	cout << "Random-LLoyd-PAM" << endl;
+	cout << "Kmeans++-LLoyd-PAM" << endl;
 	Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
 	lloydAssignment(curveArray,n,clusterArray,clusters,func);
 	for(i=0;i<clusters;i++){
@@ -345,7 +347,7 @@ int main(int argc, char** argv){
 		}
 	//K++-LSH-PAM
 	changes = clusters;
-	cout << "Random-LSH-PAM" << endl;
+	cout << "Kmeans++-LSH-PAM" << endl;
 	Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
 	lshAssignment(lTables,l,tablesize,k,d,curve_t,curveArray,n,clusterArray,clusters,func);
 	for(i=0;i<clusters;i++){
@@ -379,18 +381,75 @@ int main(int argc, char** argv){
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
 	if(func == 'f'){
+		changes = 0;
+		count = 1;
 		cout << "Random-Lloyd-Frechet" << endl;
-		Kmeans_initialization(curveArray,n,clusterArray,clusters,func);
+		randomK(curveArray,n,clusterArray,clusters);
 		lloydAssignment(curveArray,n,clusterArray,clusters,func);
 		for(i=0;i<clusters;i++){
-			oldCenters[i] = clusterArray[i].getCenter().id;
+			oldCurves[i] = clusterArray[i].getCenter();
 		}
 		treeArray = new BinTree[clusters];
 		for(i=0;i<clusters;i++){
 			treeArray[i].constructTree(clusterArray[i].getPoints(),clusterArray[i].getCurveNumber());
 			cout << "Cluster " << i << endl;
 			clusterArray[i].setCenter(treeArray[i].meanFrechet());
+			if(!equalCurves(clusterArray[i].getCenter(),oldCurves[i]))
+				changes++;
 		}
+		for(i=0;i<clusters;i++){
+			oldCurves[i] = clusterArray[i].getCenter();
+		}
+		lloydAssignment(curveArray,n,clusterArray,clusters,func);
+		cout << changes << endl;
+		while(changes > 0 && count < 10){
+			changes = 0;
+			treeArray = new BinTree[clusters];
+			for(i=0;i<clusters;i++){
+				treeArray[i].constructTree(clusterArray[i].getPoints(),clusterArray[i].getCurveNumber());
+				cout << "Cluster " << i << endl;
+				clusterArray[i].setCenter(treeArray[i].meanFrechet());
+				if(!equalCurves(clusterArray[i].getCenter(),oldCurves[i]))
+					changes++;
+			}
+			for(i=0;i<clusters;i++){
+				for(j=0;j<oldCurves[i].m;j++)
+					delete oldCurves[i].points[j];
+				delete oldCurves[i].points;
+				oldCurves[i] = clusterArray[i].getCenter();
+			}
+			count++;
+			cout << changes << endl;
+			lloydAssignment(curveArray,n,clusterArray,clusters,func);
+		}
+		output << endl << "Algorithm: Random-Lloyd-Frechet" << endl;
+		if(func == 'f')
+			output << "Metric: Frechet" << endl;
+		else
+			output << "Metric: DTW" << endl;
+		if(!complete)
+			for(i=0;i<clusters;i++){
+				output << "CLUSTER-" << i+1 << " {size: " << clusterArray[i].getCurveNumber() << ", centroid: [";
+				for(j=0;j<clusterArray[i].getCenter().m-1;j++){
+					output << "(";
+					for(count=0;count<clusterArray[i].getCenter().dimension-1;count++)
+						output << clusterArray[i].getCenter().points[j][count] << ", ";
+					output << clusterArray[i].getCenter().points[j][count] << "), ";
+				}
+				output << "(";
+				for(count=0;count<clusterArray[i].getCenter().dimension-1;count++)
+					output << clusterArray[i].getCenter().points[j][count] << ", ";
+				output << clusterArray[i].getCenter().points[j][count] << ")]" << endl;;
+			}
+		else
+			for(i=0;i<clusters;i++){
+				output << "CLUSTER-" << i+1 << " {";
+				for(j=0;j<clusterArray[i].getCurveNumber()-1;j++)
+					output << clusterArray[i].getPoints()[j].id << ", ";
+				output << clusterArray[i].getPoints()[j].id << "}" << endl;
+			}
+			
+		
 		delete [] treeArray;
 	}
 	/*
