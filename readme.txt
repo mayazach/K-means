@@ -1,4 +1,4 @@
-Αλλαγιάννης Σπυρίδων 1115201300005
+﻿Αλλαγιάννης Σπυρίδων 1115201300005
 Ζαχαροπούλου Μαγδαληνή 1115201300046
 
 Όνομα εκτελέσιμου προγράμματος: kmeans
@@ -28,9 +28,9 @@
 -randomnum.h,randomnum.cpp: γεννήτριες τυχαίων αριθμών, με κανονική και ομοιόμορφη κατανομή, και αριθμών Marsaglia
 -cluster.h, cluster.cpp: αντικείμενο του cluster με το id, το κέντρο και δείκτες στα σημεία του
 -kfunctions.h, kfunctions.cpp: συναρτήσεις random αρχικοποίησης, Lloyd και LSH ανάθεσης και PAM update
--dfd_res.h:
--optimal_traversal.h, optimal_traversal.cpp:
--pairsList.h, pairsList.cpp:
+-dfd_res.h:struct με τις απαραίτητες πληροφορίες για τον υπολογισμό της Mean Discrete Frechet Curve
+-optimal_traversal.h, optimal_traversal.cpp:υπολογισμός της Mean Discrete Frechet Curve
+-pairsList.h, pairsList.cpp:λίστα με ζεύγη σημείων για τον υπολογισμό της Mean Discrete Frechet Curve
 -binaryTree.h, binaryTree.cpp: δυαδικό δέντρο καμπύλων για υπολογισμό του Mean Discrete Frechet
--kmeans_initialization.h, kmeans_initialization.cpp:
--silhouette.h, silhouette.cpp: 
+-kmeans_initialization.h, kmeans_initialization.cpp:επιλογή αρχικών κέντρων με εφαρμογή του αλγορίθμου k-means++
+-silhouette.h, silhouette.cpp: υπολογισμός αριθμών silhouette για την DFT
