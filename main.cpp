@@ -15,6 +15,7 @@
 #include "kfunctions.h"
 #include "kmeans_initialization.h"
 #include "binaryTree.h"
+#include "silhouette.h"
 
 using namespace std;
 
@@ -44,6 +45,7 @@ int main(int argc, char** argv){
 	BinTree* treeArray;
 	string* oldCenters;
 	Curve* oldCurves;
+	double* silhouettes;
 
 	/**
 		In this section, command line input is checked and argument values are assigned
@@ -177,7 +179,6 @@ int main(int argc, char** argv){
 		c.inDataset = true;
 		mylist.push(c);
 	}
-	//c.dimension = dimension;
 	while(!input.eof()){
 		input >> c.id >> c.m;
 		c.points = new double*[c.m];
@@ -275,6 +276,14 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
+	if(func == 'f'){
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
+	}
 	//Random-LSH-PAM
 	changes = clusters;
 	cout << "Random-LSH-PAM" << endl;
@@ -310,6 +319,14 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
+	if(func == 'f'){
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
+	}
 	//K++-Lloyd-PAM
 	changes = clusters;
 	cout << "Kmeans++-LLoyd-PAM" << endl;
@@ -345,6 +362,14 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
+	if(func == 'f'){
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
+	}
 	//K++-LSH-PAM
 	changes = clusters;
 	cout << "Kmeans++-LSH-PAM" << endl;
@@ -380,6 +405,14 @@ int main(int argc, char** argv){
 				output << clusterArray[i].getPoints()[j].id << ", ";
 			output << clusterArray[i].getPoints()[j].id << "}" << endl;
 		}
+	if(func == 'f'){
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
+	}
 
 	if(func == 'f'){
 		//Random-LLoyd-Frechet
@@ -452,7 +485,13 @@ int main(int argc, char** argv){
 					output << clusterArray[i].getPoints()[j].id << ", ";
 				output << clusterArray[i].getPoints()[j].id << "}" << endl;
 			}
-			
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
+		
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
 			if(!c.inDataset){
@@ -531,6 +570,12 @@ int main(int argc, char** argv){
 					output << clusterArray[i].getPoints()[j].id << ", ";
 				output << clusterArray[i].getPoints()[j].id << "}" << endl;
 			}
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
@@ -610,6 +655,12 @@ int main(int argc, char** argv){
 					output << clusterArray[i].getPoints()[j].id << ", ";
 				output << clusterArray[i].getPoints()[j].id << "}" << endl;
 			}
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();
@@ -689,6 +740,12 @@ int main(int argc, char** argv){
 					output << clusterArray[i].getPoints()[j].id << ", ";
 				output << clusterArray[i].getPoints()[j].id << "}" << endl;
 			}
+		silhouettes = dfd_silhouette(clusterArray,clusters);
+		output << "Silhouette: [";
+		for(i=0;i<clusters;i++)
+			output << silhouettes[i] << ", ";
+		output << silhouettes[i] << "]" << endl;
+		delete [] silhouettes;
 			
 		for(i=0;i<clusters;i++){
 			c = clusterArray[i].getCenter();

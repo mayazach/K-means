@@ -54,7 +54,6 @@ double* dfd_silhouette(Cluster clusters[],int k)
     int curveNumber;
     double* a;
     double* b;
-    cout<<"silhouette method\n";
     /*exoume k kedra,ara kai k kodina kedra*/
     neighbours=new int[k];
     for(cl_num=0;cl_num<k;cl_num++)
@@ -101,7 +100,6 @@ double* dfd_silhouette(Cluster clusters[],int k)
  
     }
     /*typwnw*/
-    cout<<"\n";
     /*for(cl_num=0;cl_num<k;cl_num++)
     {   
        cout<<"center curve id"<<clusters[cl_num].getId();
